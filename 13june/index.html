@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script> 
+</head>
+
+<body>
+    <div class="signup-container">
+        <h1>Signup Form</h1>
+
+        <form id="signup-form" onsubmit="submitHandle(event)">
+            <label for="uname">Username:</label>
+            <input type="text" placeholder="Username" name="uname" id="uname" required >
+            <span id="uname-msg" style="color: red;"></span><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required >
+            <span id="email-msg" style="color: red;"></span><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" >
+            <span id="password-msg" style="color: red;"></span><br>
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required >
+            <span id="confirm-password-msg" style="color: red;"></span><br>
+
+            <label for="dob">DOB:</label>
+            <input type="date" name="dob" id="dob" required >
+            <span id="dob-msg" style="color: red;"></span><br>
+
+            <label for="phone">Phone No:</label>
+            <input type="tel" id="phone" placeholder="123-456-7890" name="phone" required >
+            <span id="phone-msg" style="color: red;"></span><br>
+
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street" required >
+            <span id="street-msg" style="color: red;"></span><br>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required >
+            <span id="city-msg" style="color: red;"></span><br>
+
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" required >
+            <span id="state-msg" style="color: red;"></span><br>
+
+            <label for="zipcode">Zipcode:</label>
+            <input type="text" id="zipcode" name="zipcode" required >
+            <span id="zipcode-msg" style="color: red;"></span><br>
+
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+
+</body>
+
+</html>
