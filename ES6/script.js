@@ -74,6 +74,18 @@
 
 
 
+async function getUsers(){
+    try {
+        const response = await fetch ('https://api.example.com/data')
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log('Error: ', error);
+    }
+}
+getUsers();
+
+
 // 8) const numbers = [1,2,3,4,5];
 // const newNums = numbers.map((num) => {
 //     return num*2
