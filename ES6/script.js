@@ -1,3 +1,6 @@
+
+
+
 // 1) function multiplyWithCallback(num1, num2, callback){
 //     let result = num1 * num2;
 //     callback(result);
@@ -73,17 +76,47 @@
 //     });
 
 
+// 5)async function getUsers(){
+//     try {
+//         const response = await fetch ('https://api.example.com/data')
+//         const data = await response.json();
+//         console.log(data);
+//     } catch (error) {
+//         console.log('Error: ', error);
+//     }
+// }
+// getUsers();
 
-async function getUsers(){
-    try {
-        const response = await fetch ('https://api.example.com/data')
-        const data = await response.json();
-        console.log(data);
-    } catch (error) {
-        console.log('Error: ', error);
-    }
-}
-getUsers();
+
+
+//const fetch = require('node-fetch'); 
+
+
+// 6)async function performTasks() {
+//     try {
+        
+//         const response1 = await fetch('https://api.example.com/task1');
+//         const data1 = await response1.json(); 
+
+        
+//         const response3 = await fetch('https://api.example.com/task3', {
+//             method: 'POST',
+//             body: JSON.stringify(data1)
+//         });
+
+//         const data2 = await response3.json();
+//         console.log('Data after post:', data2);
+//     } catch (error) {
+//         console.error('Error :', error);
+//     }
+// }
+
+
+// performTasks();
+
+
+//const fetch = require('node-fetch'); 
+
 
 
 // 8) const numbers = [1,2,3,4,5];
