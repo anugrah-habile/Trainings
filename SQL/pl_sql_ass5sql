@@ -1,0 +1,32 @@
+SET SERVEROUTPUT ON;
+SET VERIFY ON;
+SET MODIFY OFF;
+DECLARE
+Cursor emp_cursor (p_dept_id departments.department_id%TYPE) IS
+Select employee_id, salary
+From Employees
+Where department_id = p_dept_id
+For update of salary;
+
+v_dept_id departents.department_id%TYPE
+v_emp_id employees.employee_id%TYPE
+v_salary employees.employee_salary%TYPE
+
+BEGIN
+For v_dept_id IN (60, 80, 90) loop
+open emp_cursor(v_dept_id);
+Loop
+Fetch emp_cursor Into v_emp_id, v_salary
+Exit when emp_cursor%NOTFOUND;
+
+Update employees
+Set salary = salary * 1.10
+Where Current of emp_cursor
+
+DBMS_OUTPUT.PUT_LINE('Increased salary :' || v_emp_id || ' to ' || v_salary * 1.1);
+End loop;
+
+close emp_cursor;
+End loop;
+
+END;
