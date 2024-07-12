@@ -7,7 +7,7 @@ v_emp_id employees.employee_id%TYPE;
 v_first_name employees.first_name%TYPE;
 v_emp_salary employees.salary%TYPE;
 
-Cursor emp_cursor IS
+Cursor emp_cursor is
 Select employee_id, first_name, salary From Employees   
 
 BEGIN
@@ -171,14 +171,16 @@ v_salary employees.salary%TYPE;
 BEGIN
 v_emp_id := &employee_id;
 
-IF V_Employee_Id < 0 THEN
+IF v_emp_id < 0 THEN
 Raise_application_error (-20202, 'Invalid employee ID entered.');
-END IF;
+End if;
 
 Select first_name, salary
 into v_first_name, v_salary
 from employees
 where employee_id = v_emp_id;
+
+
 
 Dbms_output.put_line('Employee Name: '|| v_first_name);
 Dbms_output.put_line('Employee Salary: '|| v_salary);
