@@ -145,7 +145,36 @@ END;
 
 
 --Q7)
-CREATE OR REPLACE FUNCTION employee_pkg as
+CREATE OR REPLACE Package employee_pkg as
+Procedure insert_employee (
+p_emp_id in Number,
+p_first_name in Varchar2,
+p_salary in Number,
+p_job_title in Varchar2,
+p_dept_id in Number);
+
+
+FUNCTION calculate_salary (
+p_hours in Number,
+p_rate in Number)
+Return number;
+
+
+Procedure update_job (
+p_emp_id in Number,
+p_new_job in Varchar2);
+
+
+Function get_empcount (
+p_dept_id in Number)
+Return Number;
+
+End employee_pkg;
+
+
+
+
+CREATE OR REPLACE Package body employee_pkg as
 Procedure insert_employee (
 p_emp_id in Number,
 p_first_name in Varchar2,
@@ -153,15 +182,166 @@ p_salary in Number,
 p_job_title in Varchar2,
 p_dept_id in Number) is
 
-BEGIN
-Insert into employees(employee_id, first_name, salary, job_title, department_id)
+BEGIN 
+Insert into (employee_id, first_name, salary, job_title, dept_id)
 Values (p_emp_id, p_first_name, p_salary, p_job_title, p_dept_id)
 
-END insert_employee
+
+EXCEPTION
+When DUP_VAL_ON_INDEX Then
+RAISE_APPLICATION_ERROR(-20001, 'Employee already exists.');
+
+END insert_employee;
+
 
 FUNCTION calculate_salary (
 p_hours in Number,
 p_rate in Number)
+Return number is
+
+BEGIN 
+Return p_hours * p_rate;
+END calculate_salary;
+
+
+Procedure update_job (
+p_emp_id in Number,
+p_new_job in Varchar2) is
+
+BEGIN
+UPDATE employees
+Set job_title = p_new_job
+Where emp_id = p_emp_id;
+
+If SQL%ROWCOUNT = 0 Then
+RAISE_APPLICATION_ERROR(-20002, 'Employee ID not found.');
+END IF;
+END update_job_title;
+
+FUNCTION get_employee_count (
+p_department_id IN NUMBER)
+Return Number is
+v_count NUMBER;
+
+BEGIN
+Select Count(*) into v_count
+From employees
+Where department_id = p_department_id;
+
+Return v_count;
+End get_employee_count;
+
+END employee_pkg;
+
+
+
+
+--Q8)
+CREATE OR REPLACE Package bank_operations_pkg as
+Procedure deposit (
+p_acc_id in Number,
+p_amount in Number);
+
+Procedure withdraw (
+p_acc_id in Number,
+p_amount in Number);
+
+Function interest (
+p_rate in Number,
+p_time in Number,
+p_acc_id in Number)
+Return Number;
+
+Procedure transfer (
+p_acc1 in Number,
+p_acc2 in Number,
+p_acc_id in Number);
+
+End bank_operations_pkg;
+
+
+CREATE OR REPLACE Package body bank_operations_pkg as
+Procedure deposit (
+p_acc_id in Number,
+p_amount in Number) is
+BEGIN
+Update accounts
+Set balance = balance + p_amount
+where account_id = p_acc_id;
+
+If SQL%ROWCOUNT = 0 Then
+RAISE_APPLICATION_ERROR(-20002, 'Employee ID not found.')
+End if;
+
+End deposit;
+
+Procedure withdraw (
+p_acc_id in Number,
+p_amount in Number) is
+v_bal Number;
+BEGIN
+Select balance into v_bal
+From accounts
+where accound_id = p_acc_id;
+
+If(v_bal < p_amount) Then
+RAISE_APPLICATION_ERROR(-20002, 'Insufficient balance remaining')
+End If;
+
+End withdraw;
+
+
+Function interest (
+p_rate in Number,
+p_time in Number,
+p_acc_id in Number) 
+Return Number Is
+
+v_bal Number;
+v_interest Number;
+
+BEGIN
+Select balance into v_bal
+From accounts
+where accound_id = p_acc_id;
+
+v_interest := v_bal * (v_time/100) * v_rate
+Return v_interest;
+
+END interest;
+
+
+Procedure transfer (
+p_acc_id1 in Number,
+p_acc_id2 in Number,
+p_amount in Number) is
+
+v_bal1 Number;
+v_bal2 Number;
+
+Begin
+Select balance into v_bal1
+From accounts
+where account_id = p_acc_id1;
+
+If(v_bal1 < p_amount) Then
+RAISE_APPLICATION_ERROR(-20002, 'Insufficient balance remaining')
+End If;
+
+Update accounts
+set balance = balance - p_amount
+where account_id = p_acc_id1;
+
+Update accounts
+set balance = balance + p_amount
+where account_id = p_acc_id2;
+
+If SQL%ROWCOUNT = 0 Then
+RAISE_APPLICATION_ERROR(-20003, 'ID not found.')
+End if;
+END transfer;
+
+END bank_operations_pkg;
 
 
 
