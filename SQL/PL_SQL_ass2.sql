@@ -35,7 +35,6 @@ DECLARE
     v_dept_name departments.department_name%TYPE;
     v_dept_loc departments.location%TYPE;
 BEGIN
-    -- Prompt user for department details
     DBMS_OUTPUT.PUT('Enter Department Name: ');
     ACCEPT dept_name PROMPT ' ' FORMAT A30;
 
@@ -109,9 +108,16 @@ BEGIN
     WHERE salary < 3000 AND datediff(years, Getdate(), hiredate)<5
     v_count := SQL%ROWCOUNT;
 
-    DBMS_OUTPUT.PUT_LINE('Number of employees deleted: ' || v_delete_count);    
+    DBMS_OUTPUT.PUT_LINE('Number of employees deleted: ' || v_count);    
     COMMIT; 
 END;
+
+
+
+
+
+
+
 
 
 
